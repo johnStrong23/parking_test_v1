@@ -1,9 +1,5 @@
 # **Install Detectron2**
 
----
-
-
-
 #Need to install an old version of pytorch
 
 !pip install pyyaml==5.1
@@ -14,6 +10,61 @@
 # install detectron2 that matches pytorch 1.8 
 !pip install detectron2 -f https://dl.fbaipublicfiles.com/detectron2/wheels/cu101/torch1.8/index.html
 # **Run a Pre-Trained Detectron2 Model**
+
+#Perform **Authorization**
+
+from google.colab import drive
+drive.mount('/content/drive/')
+
+#Reach my Google Drive and **Copy** Video-Content
+
+# Make a temporary directory in Google colab
+!mkdir -p /content/parking-space/Videos/frames >> /dev/null
+
+#Copy Video stored in Google Drive to COLAB
+!cp /content/drive/My\ Drive/ML-apps/parking-space-monitoring/Videos/*.mp4 parking-space/Videos/
+
+!mkdir -p /content/parking-space/Videos/frames-all
+
+#Only for Special Cases [1]: Copy Produced Frames from Google Colab --> Google Drive
+
+#!ls /content/drive/My\ Drive//ML-apps/parking-space-monitoring/Videos/frames/
+
+!cp parking-space/Videos/frames/*.png /content/drive/My\ Drive/ML-apps/parking-space-monitoring/Videos/frames/a2_b
+
+#Only for Special Cases [2]: Goto "/frames" folder && **Delete** all images
+
+
+!rm /content/parking-space/Videos/frames/*.png
+
+#**Transform Video to Frames** ... ... Save One_Frame_Each (.i.e) 24
+
+#Important Constants
+
+MAIN_FOLDER = '/content/parking-space'
+VIDEOS_FOLDER = MAIN_FOLDER + '/Videos'
+OUTPUT_FRAMES_PATH = VIDEOS_FOLDER + '/frames'
+
+FRAME_NAME = 'frame'
+
+# *** IMPORTANT - How Many Frames to Save / Frame-Rate *** 
+one_frame_each = 24
+
+!(if [ -d {OUTPUT_FRAMES_PATH} ]; then \
+echo 'OUTPUT Directory Already EXISTS' && rm -rf {OUTPUT_FRAMES_PATH}/*.png; else \
+echo 'OUTPUT Directory is MISSING'; fi)
+
+all_video_files = !ls {VIDEOS_FOLDER}/*.mp4
+# Α5 parking-space
+#video_file = all_video_files[0]
+
+# A7 parking-space
+#video_file = all_video_files[1]
+
+# A7 parking-space (b)
+video_file = all_video_files[2]
+
+print('Parking Space Video Found for Analysis ...' + video_file)
 
 
 #Prepare the Mask-RCNN PreTrained Model (based on COCO Dataset)
