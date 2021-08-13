@@ -2,6 +2,8 @@
 
 #Need to install an old version of pytorch
 
+#comment added for MILTOS to see if need be
+
 !pip install pyyaml==5.1
 
 # workaround: install old version of pytorch since detectron2 hasn't released packages for pyTorch 1.9
